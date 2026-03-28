@@ -1,0 +1,583 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Temple API",
+    "description": "CSE341 Temple API documentation",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "apiKey",
+      "description": "Required for GET temple routes"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/temples/": {
+      "get": {
+        "tags": [
+          "Temples"
+        ],
+        "summary": "Get all temples",
+        "description": "Returns all temples when a valid apiKey header is provided.",
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "header",
+            "description": "API key required for GET routes",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of temples",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "temple_id": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Kampala Uganda Temple"
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "Kampala, Uganda"
+                  },
+                  "dedicated": {
+                    "type": "string",
+                    "example": "2026-03-28"
+                  },
+                  "additionalInfo": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Temples"
+        ],
+        "summary": "Create a temple",
+        "description": "Creates a new temple record.",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Temple data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "temple_id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Kampala Uganda Temple"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "A temple in Kampala"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "Kampala, Uganda"
+                },
+                "dedicated": {
+                  "type": "string",
+                  "example": "2026-03-28"
+                },
+                "additionalInfo": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Temple created successfully"
+          },
+          "400": {
+            "description": "Invalid request body"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/temples/{temple_id}": {
+      "get": {
+        "tags": [
+          "Temples"
+        ],
+        "summary": "Get one temple by temple_id",
+        "description": "Returns a single temple when a valid apiKey header is provided.",
+        "parameters": [
+          {
+            "name": "temple_id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "Temple ID",
+            "example": 1
+          },
+          {
+            "name": "apiKey",
+            "in": "header",
+            "description": "API key required for GET routes",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Temple found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "temple_id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Kampala Uganda Temple"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "A temple in Kampala"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "Kampala, Uganda"
+                },
+                "dedicated": {
+                  "type": "string",
+                  "example": "2026-03-28"
+                },
+                "additionalInfo": {
+                  "type": "boolean",
+                  "example": true
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Temple not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Temples"
+        ],
+        "summary": "Update a temple by temple_id",
+        "description": "Updates an existing temple record.",
+        "parameters": [
+          {
+            "name": "temple_id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "Temple ID",
+            "example": 1
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Temple fields to update",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Updated Kampala Uganda Temple"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Updated description"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "Kampala, Uganda"
+                },
+                "dedicated": {
+                  "type": "string",
+                  "example": "2026-03-28"
+                },
+                "additionalInfo": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Temple updated successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Temple not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Temples"
+        ],
+        "summary": "Delete a temple by temple_id",
+        "description": "Deletes a temple record.",
+        "parameters": [
+          {
+            "name": "temple_id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "Temple ID",
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Temple deleted successfully"
+          },
+          "404": {
+            "description": "Temple not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": [
+          "Temples"
+        ],
+        "summary": "Get all temples",
+        "description": "Returns all temples when a valid apiKey header is provided.",
+        "parameters": [
+          {
+            "name": "apiKey",
+            "in": "header",
+            "description": "API key required for GET routes",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of temples",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "temple_id": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "name": {
+                    "type": "string",
+                    "example": "Kampala Uganda Temple"
+                  },
+                  "location": {
+                    "type": "string",
+                    "example": "Kampala, Uganda"
+                  },
+                  "dedicated": {
+                    "type": "string",
+                    "example": "2026-03-28"
+                  },
+                  "additionalInfo": {
+                    "type": "boolean",
+                    "example": true
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Temples"
+        ],
+        "summary": "Create a temple",
+        "description": "Creates a new temple record.",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Temple data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "temple_id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Kampala Uganda Temple"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "A temple in Kampala"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "Kampala, Uganda"
+                },
+                "dedicated": {
+                  "type": "string",
+                  "example": "2026-03-28"
+                },
+                "additionalInfo": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Temple created successfully"
+          },
+          "400": {
+            "description": "Invalid request body"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/{temple_id}": {
+      "get": {
+        "tags": [
+          "Temples"
+        ],
+        "summary": "Get one temple by temple_id",
+        "description": "Returns a single temple when a valid apiKey header is provided.",
+        "parameters": [
+          {
+            "name": "temple_id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "Temple ID",
+            "example": 1
+          },
+          {
+            "name": "apiKey",
+            "in": "header",
+            "description": "API key required for GET routes",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Temple found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "temple_id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "name": {
+                  "type": "string",
+                  "example": "Kampala Uganda Temple"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "A temple in Kampala"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "Kampala, Uganda"
+                },
+                "dedicated": {
+                  "type": "string",
+                  "example": "2026-03-28"
+                },
+                "additionalInfo": {
+                  "type": "boolean",
+                  "example": true
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Temple not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Temples"
+        ],
+        "summary": "Update a temple by temple_id",
+        "description": "Updates an existing temple record.",
+        "parameters": [
+          {
+            "name": "temple_id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "Temple ID",
+            "example": 1
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Temple fields to update",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Updated Kampala Uganda Temple"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Updated description"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "Kampala, Uganda"
+                },
+                "dedicated": {
+                  "type": "string",
+                  "example": "2026-03-28"
+                },
+                "additionalInfo": {
+                  "type": "boolean",
+                  "example": true
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Temple updated successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Temple not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Temples"
+        ],
+        "summary": "Delete a temple by temple_id",
+        "description": "Deletes a temple record.",
+        "parameters": [
+          {
+            "name": "temple_id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "Temple ID",
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Temple deleted successfully"
+          },
+          "404": {
+            "description": "Temple not found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  }
+}

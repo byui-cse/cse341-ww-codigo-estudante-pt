@@ -1,17 +1,15 @@
 module.exports = (mongoose) => {
-  const Temple = mongoose.model(
-    'temples',
-    mongoose.Schema(
-      {
-        temple_id: Number,
-        name: String,
-        location: String,
-        dedicated: String,
-        additionalInfo: Boolean,
-      },
-      { timestamps: true }
-    )
+  const schema = new mongoose.Schema(
+    {
+      temple_id: Number,
+      name: String,
+      description: String,
+      location: String,
+      dedicated: String,
+      additionalInfo: mongoose.Schema.Types.Mixed,
+    },
+    { timestamps: true }
   );
 
-  return Temple;
+  return mongoose.model('temples', schema);
 };
